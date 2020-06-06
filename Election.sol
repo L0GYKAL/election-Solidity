@@ -28,8 +28,8 @@ contract Election{
         }
     }
 
-    modifier voteOnlyOnce(address _address){
-        require(voters[_address] == false);
+    modifier voteOnlyOnce(){
+        require(voters[msg.sender] == false);
         _;
     }
     
@@ -38,7 +38,7 @@ contract Election{
         _;
     }
 
-    function vote(uint _ID) public payable voteOnlyOnce(msg.sender){
+    function vote(uint _ID) external payable voteOnlyOnce(){
         require(isCandidate(_ID) && msg.value >= 0.01 ether);
         candidates[_ID].votes++;
         voters[msg.sender] = true;
